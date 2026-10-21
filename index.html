@@ -1,0 +1,942 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Inter Mitente FC</title>
+<meta name="description" content="Web oficial del Inter Mitente FC: próximo partido, resultados, goleadores y plantilla. Temporada 2026/27.">
+
+<!-- Vista previa al compartir el enlace (WhatsApp, redes...) -->
+<meta property="og:title" content="Inter Mitente FC">
+<meta property="og:description" content="Próximo partido, resultados, clasificación y plantilla. Temporada 2026/27.">
+<meta property="og:url" content="https://intermitentefc.netlify.app/">
+<meta property="og:image" content="https://intermitentefc.netlify.app/iconos/icono-512.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta property="og:type" content="website">
+
+<link rel="icon" href="foto%20escudo.png">
+
+<!-- App instalable (PWA) -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0a0a0b">
+<link rel="apple-touch-icon" href="iconos/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Inter Mitente">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0b;
+    --panel: #131315;
+    --panel-2: #1b1b1e;
+    --line: #2a2a2e;
+    --gold: #b8995a;
+    --gold-light: #d8bd7f;
+    --blue: #1f4fd1;
+    --pink: #ff4fa8;
+    --text: #f2f0eb;
+    --muted: #9a978f;
+    --loss: #ef8a80;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: "Inter", system-ui, sans-serif;
+    line-height: 1.5;
+  }
+  img { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+
+  /* Navegación */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(10,10,11,.88);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; min-height: 64px; gap: 16px; }
+  .brand { display: flex; align-items: center; gap: 10px; white-space: nowrap; font-family: "Oswald", sans-serif; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+  .brand img { width: 38px; height: 38px; }
+  nav ul { list-style: none; display: flex; gap: 20px; font-size: .95rem; color: var(--muted); }
+  nav ul a { display: inline-block; padding: 10px 0; white-space: nowrap; }
+  nav ul a:hover { color: var(--gold-light); }
+  @media (max-width: 1060px) {
+    nav .wrap { flex-wrap: wrap; padding-top: 10px; gap: 4px; }
+    nav ul { width: 100%; gap: 20px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+    nav ul::-webkit-scrollbar { display: none; }
+  }
+
+  /* Que los títulos no queden tapados por la barra de arriba */
+  section, header { scroll-margin-top: 110px; }
+
+  /* Portada */
+  .hero {
+    position: relative; overflow: hidden;
+    padding: 64px 0 72px;
+    background:
+      radial-gradient(circle at 50% 30%, rgba(184,153,90,.18), transparent 60%),
+      repeating-linear-gradient(90deg, rgba(31,79,209,.07) 0 60px, transparent 60px 120px);
+    border-bottom: 1px solid var(--line);
+    text-align: center;
+  }
+  .hero > .wrap > img { width: min(200px, 50vw); margin: 0 auto 24px; filter: drop-shadow(0 10px 40px rgba(184,153,90,.35)); }
+  .hero h1 {
+    font-family: "Oswald", sans-serif; font-weight: 700;
+    font-size: clamp(2.6rem, 8vw, 5rem); line-height: 1;
+    letter-spacing: .04em; text-transform: uppercase;
+  }
+  .hero h1 span { color: var(--gold); }
+  .hero .season { color: var(--muted); margin-top: 12px; font-size: 1.05rem; }
+  .hero .cta { display: inline-flex; gap: 12px; margin-top: 28px; flex-wrap: wrap; justify-content: center; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 22px; border-radius: 999px; font-weight: 600; font-size: .95rem;
+    border: 1px solid var(--gold); transition: .2s; background: none; color: inherit; font-family: inherit; cursor: pointer;
+  }
+  .btn.solid { background: var(--gold); color: #111; }
+  .btn.solid:hover { background: var(--gold-light); }
+  .btn:not(.solid):hover { background: rgba(184,153,90,.12); }
+
+  /* Próximo partido (en la portada) */
+  .next-card {
+    max-width: 560px; margin: 32px auto 0; text-align: center;
+    background: rgba(19,19,21,.85); border: 1px solid var(--gold); border-radius: 18px;
+    padding: 20px 20px 22px;
+  }
+  .next-card .eyebrow { margin-bottom: 14px; }
+  .next-teams { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 12px; }
+  .next-teams .t { display: flex; flex-direction: column; align-items: center; gap: 8px; font-weight: 700; font-size: 1rem; }
+  .next-teams .t img { width: 56px; height: 56px; object-fit: contain; }
+  .next-teams .t.us { color: var(--gold-light); }
+  .next-card .info { margin-top: 14px; color: var(--muted); font-size: .95rem; }
+  .next-card .info b { color: var(--text); }
+  .next-card .map { display: inline-block; margin-top: 8px; color: var(--gold-light); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
+
+  /* Secciones */
+  section { padding: 72px 0; }
+  .eyebrow { color: var(--gold); font-size: .8rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+  h2 { font-family: "Oswald", sans-serif; font-size: clamp(1.9rem, 5vw, 2.6rem); text-transform: uppercase; margin: 6px 0 28px; }
+  h3.sub { font-family: "Oswald", sans-serif; text-transform: uppercase; letter-spacing: .04em; font-size: 1.25rem; margin: 36px 0 14px; }
+  .note { color: var(--muted); font-size: .9rem; margin: -14px 0 18px; }
+
+  /* Último resultado */
+  .result {
+    background: linear-gradient(135deg, var(--panel), var(--panel-2));
+    border: 1px solid var(--line); border-radius: 18px;
+    padding: 28px 20px;
+  }
+  .result .meta { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; color: var(--muted); font-size: .9rem; margin-bottom: 24px; }
+  .result .meta b { color: var(--text); }
+  .scoreline { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 16px; }
+  .team { display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center; font-weight: 700; }
+  .team.us { color: var(--gold-light); }
+  .team img { width: 72px; height: 72px; object-fit: contain; }
+  .score { font-family: "Oswald", sans-serif; font-size: clamp(2.6rem, 9vw, 4rem); font-weight: 700; letter-spacing: .05em; white-space: nowrap; }
+  .score .us { color: var(--gold); }
+  .result-foot { display: flex; flex-direction: column; align-items: center; gap: 14px; margin-top: 18px; }
+  .badge { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: .85rem; font-weight: 700; letter-spacing: .08em; border: 1px solid; }
+  .badge.win  { background: rgba(184,153,90,.15); color: var(--gold-light); border-color: var(--gold); }
+  .badge.draw { background: rgba(154,151,143,.12); color: var(--text); border-color: var(--muted); }
+  .badge.loss { background: rgba(239,138,128,.12); color: var(--loss); border-color: var(--loss); }
+  .mvp-line { display: inline-flex; align-items: center; gap: 8px; font-size: .95rem; color: var(--muted); }
+  .mvp-line .badge { background: var(--gold); color: #111; border-color: var(--gold); font-size: .75rem; padding: 3px 10px; }
+  .mvp-line b { color: var(--gold-light); }
+  .scorers { color: var(--muted); font-size: .95rem; text-align: center; }
+  .scorers b { color: var(--text); }
+  .btn.share { font-size: .9rem; padding: 10px 18px; }
+
+  /* Calendario y resultados anteriores */
+  .fixtures { display: grid; gap: 10px; }
+  .fixture {
+    display: grid; grid-template-columns: 130px 1fr auto 1fr; align-items: center; gap: 14px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 18px;
+  }
+  .fixture.next { border-color: var(--gold); box-shadow: 0 0 0 1px rgba(184,153,90,.3) inset; }
+  .fixture .when { font-size: .85rem; color: var(--muted); display: flex; flex-direction: column; gap: 2px; }
+  .fixture .when b { color: var(--text); font-size: .95rem; }
+  .side { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: .95rem; }
+  .side.home { justify-content: flex-end; text-align: right; }
+  .side img { width: 34px; height: 34px; object-fit: contain; flex-shrink: 0; }
+  .side.us { color: var(--gold-light); }
+  .vs { font-family: "Oswald", sans-serif; color: var(--muted); border: 1px solid var(--line); border-radius: 8px; padding: 4px 12px; font-size: .95rem; white-space: nowrap; }
+  .vs.played { color: var(--text); font-size: 1.1rem; }
+  .vs.played .us { color: var(--gold); }
+  .fixture.rest { background: transparent; border-style: dashed; }
+  .rest-text { grid-column: 2 / -1; text-align: center; color: var(--muted); font-family: "Oswald", sans-serif; text-transform: uppercase; letter-spacing: .1em; font-size: .95rem; }
+  .tag { display: inline-block; font-size: .78rem; font-weight: 700; letter-spacing: .1em; color: var(--gold); }
+  @media (max-width: 700px) {
+    .fixture { grid-template-columns: 1fr auto 1fr; row-gap: 10px; }
+    .fixture .when { grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+    .side { flex-direction: column; text-align: center; font-size: .88rem; }
+    .side.home { flex-direction: column-reverse; text-align: center; }
+    .rest-text { grid-column: 1 / -1; }
+  }
+
+  /* Goleadores */
+  .leaders { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px 28px; }
+  .leaders h3.sub { margin-top: 0; }
+  .scorers-list { list-style: none; display: grid; gap: 8px; }
+  .scorers-list li {
+    display: grid; grid-template-columns: 36px 1fr auto; align-items: center; gap: 12px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 12px 16px;
+  }
+  .scorers-list li:first-child { border-color: var(--gold); }
+  .scorers-list .rank { font-family: "Oswald", sans-serif; font-size: 1.3rem; color: var(--gold); text-align: center; }
+  .scorers-list .who b { display: block; }
+  .scorers-list .who span { color: var(--muted); font-size: .85rem; }
+  .scorers-list .goals { font-family: "Oswald", sans-serif; font-size: 1.5rem; }
+  .scorers-list .goals small { font-family: "Inter", sans-serif; font-size: .8rem; color: var(--muted); margin-left: 4px; }
+  .empty { color: var(--muted); }
+
+  /* Plantilla */
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+  .filters button {
+    background: var(--panel); color: var(--muted); border: 1px solid var(--line);
+    padding: 10px 16px; border-radius: 999px; font: inherit; font-size: .9rem; cursor: pointer; transition: .2s;
+  }
+  .filters button:hover { color: var(--text); border-color: var(--gold); }
+  .filters button[aria-pressed="true"] { color: #111; background: var(--gold); border-color: var(--gold); font-weight: 600; }
+  .squad { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; }
+  .player {
+    position: relative; overflow: hidden;
+    background: linear-gradient(160deg, var(--panel-2), var(--panel));
+    border: 1px solid var(--line); border-radius: 16px; padding: 20px 18px 18px;
+  }
+  .player .num {
+    position: absolute; right: 12px; top: 2px;
+    font-family: "Oswald", sans-serif; font-size: 3.6rem; font-weight: 700;
+    color: rgba(184,153,90,.16); line-height: 1;
+  }
+  .player .pos { font-size: .75rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--gold); }
+  .player .name { font-weight: 700; margin-top: 6px; font-size: 1.05rem; position: relative; }
+  .player .stats { display: flex; gap: 16px; margin-top: 14px; font-size: .85rem; color: var(--muted); }
+  .player .stats b { color: var(--text); font-size: 1rem; margin-right: 4px; }
+
+  /* Equipaciones */
+  .kits { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+  .kit { border-radius: 18px; padding: 28px; border: 1px solid var(--line); text-align: center; }
+  .kit.home { background: radial-gradient(circle at 50% 35%, rgba(31,79,209,.35), var(--panel) 70%); }
+  .kit.away { background: radial-gradient(circle at 50% 35%, rgba(255,79,168,.3), var(--panel) 70%); }
+  .kit img { width: min(280px, 100%); margin: 0 auto 16px; filter: drop-shadow(0 18px 30px rgba(0,0,0,.5)); }
+  .kit h3 { font-family: "Oswald", sans-serif; text-transform: uppercase; letter-spacing: .06em; font-size: 1.3rem; }
+  .kit p { color: var(--muted); font-size: .95rem; }
+
+  /* Pedir camiseta */
+  .kit .kit-order { margin-top: 18px; }
+  .kits-note { margin-top: 16px; text-align: center; color: var(--muted); font-size: .9rem; }
+  .kits-note a { color: var(--gold-light); text-decoration: underline; text-underline-offset: 3px; }
+
+  /* Mejores goles */
+  .videos { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 18px; }
+  .video { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  .video .frame { position: relative; aspect-ratio: 16 / 9; background: #000; }
+  .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .video .info { padding: 14px 16px 16px; display: flex; flex-direction: column; gap: 4px; }
+  .video .info b { font-size: 1.02rem; }
+  .video .info span { color: var(--muted); font-size: .88rem; }
+  .video .info a { color: var(--gold-light); font-size: .88rem; font-weight: 600; margin-top: 4px; }
+  .empty-box { background: var(--panel); border: 1px dashed var(--line); border-radius: 16px; padding: 28px; color: var(--muted); text-align: center; }
+
+  /* Sobre nosotros */
+  .about { display: flex; flex-wrap: wrap; align-items: center; gap: 28px; background: linear-gradient(135deg, var(--panel), var(--panel-2)); border: 1px solid var(--line); border-radius: 18px; padding: 28px; }
+  .about img { width: 120px; flex: 0 0 auto; }
+  .about > div { flex: 1 1 320px; display: flex; flex-direction: column; gap: 12px; font-size: 1.02rem; }
+
+  /* Resumen de temporada */
+  .summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 14px; }
+  .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+  .stat .k { color: var(--muted); font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+  .stat .v { font-family: "Oswald", sans-serif; font-size: 2rem; font-weight: 700; line-height: 1.15; }
+  .stat .v small { font-family: "Inter", sans-serif; font-size: .8rem; color: var(--muted); font-weight: 600; margin-left: 6px; }
+  .form { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 48px; color: var(--muted); font-size: .85rem; font-weight: 600; }
+  .form .dot {
+    width: 30px; height: 30px; border-radius: 50%; display: inline-grid; place-items: center;
+    font-family: "Oswald", sans-serif; font-size: .9rem; border: 1px solid;
+  }
+  .dot.win  { background: rgba(184,153,90,.18); color: var(--gold-light); border-color: var(--gold); }
+  .dot.draw { background: rgba(154,151,143,.14); color: var(--text); border-color: var(--muted); }
+  .dot.loss { background: rgba(239,138,128,.14); color: var(--loss); border-color: var(--loss); }
+  @media (max-width: 700px) {
+    .summary { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* Clasificación */
+  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; background: var(--panel); }
+  .standings { width: 100%; border-collapse: collapse; font-size: .92rem; font-variant-numeric: tabular-nums; }
+  .standings th, .standings td { padding: 10px 8px; text-align: center; white-space: nowrap; }
+  .standings th { color: var(--muted); font-size: .75rem; font-weight: 700; letter-spacing: .1em; border-bottom: 1px solid var(--line); }
+  .standings td { border-top: 1px solid var(--line); }
+  .standings tr:first-child td { border-top: 0; }
+  .standings .pos { width: 40px; font-family: "Oswald", sans-serif; color: var(--muted); }
+  .standings .club { text-align: left; }
+  .standings .club span { display: inline-flex; align-items: center; gap: 10px; font-weight: 600; }
+  .standings .club img { width: 26px; height: 26px; object-fit: contain; }
+  .standings .pts { font-family: "Oswald", sans-serif; font-size: 1.05rem; font-weight: 700; }
+  .standings tr.us td { background: rgba(184,153,90,.1); }
+  .standings tr.us .club, .standings tr.us .pos { color: var(--gold-light); }
+  @media (max-width: 600px) {
+    .standings .opt { display: none; }
+    .standings th, .standings td { padding: 10px 6px; }
+  }
+
+  /* Próximo partido: cuenta atrás y acciones */
+  .countdown { margin-top: 14px; font-family: "Oswald", sans-serif; font-size: 1.35rem; text-transform: uppercase; letter-spacing: .05em; color: var(--gold-light); }
+  .next-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 14px; }
+  .next-actions .btn { font-size: .88rem; padding: 9px 16px; }
+
+  /* Menú: sección activa y aviso de que hay más a la derecha */
+  nav ul a.active { color: var(--gold-light); box-shadow: inset 0 -2px 0 var(--gold); }
+  @media (max-width: 1060px) {
+    nav ul.more { -webkit-mask-image: linear-gradient(90deg, #000 80%, transparent); mask-image: linear-gradient(90deg, #000 80%, transparent); }
+  }
+
+  footer { border-top: 1px solid var(--line); padding: 36px 0; color: var(--muted); font-size: .9rem; text-align: center; }
+  footer img { width: 48px; margin: 0 auto 10px; }
+  .foot-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 24px; }
+  .foot-links a {
+    display: inline-block; padding: 10px 18px; border-radius: 999px;
+    border: 1px solid var(--line); color: var(--text); font-weight: 600; transition: .2s;
+  }
+  .foot-links a:hover { border-color: var(--gold); color: var(--gold-light); }
+
+  /* Calendario plegable: en ordenador se ve entero y el botón no sale */
+  .more-btn { display: none; }
+
+  /* ===== Ajustes solo para móvil ===== */
+  @media (max-width: 700px) {
+    /* Portada: escudo más pequeño y sin botones extra, para ver el próximo partido entero */
+    .hero { padding: 32px 0 40px; }
+    .hero > .wrap > img { width: 120px; margin-bottom: 16px; }
+    .hero .cta { display: none; }
+    .next-card { margin-top: 22px; }
+
+    /* Calendario: solo los 3 próximos, el resto con el botón */
+    .fixtures.collapsed .extra { display: none; }
+    .more-btn { display: flex; justify-content: center; width: 100%; margin-top: 12px; }
+
+    /* Equipaciones una al lado de la otra */
+    .kits { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .kit { padding: 16px 10px; }
+    .kit img { margin-bottom: 10px; }
+    .kit h3 { font-size: 1.05rem; }
+    .kit p { font-size: .8rem; line-height: 1.35; }
+    .kit .kit-order { margin-top: 12px; padding: 10px 14px; font-size: .85rem; }
+
+    /* Enlaces pequeños más fáciles de pulsar */
+    .video .info a { display: inline-block; padding: 10px 0; margin: -6px 0 -10px; }
+    .kits-note a { display: inline-block; padding: 10px 0; }
+  }
+  @media (max-width: 600px) {
+    /* Plantilla: 2 tarjetas por fila */
+    .squad { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .player { padding: 14px 12px 12px; border-radius: 14px; }
+    .player .num { font-size: 2.6rem; right: 8px; }
+    .player .pos { font-size: .68rem; letter-spacing: .08em; }
+    .player .name { font-size: .95rem; line-height: 1.25; }
+    .player .stats { gap: 10px; margin-top: 10px; font-size: .78rem; }
+    .player .stats b { font-size: .95rem; margin-right: 3px; }
+  }
+
+  /* Aviso "Instala la app" */
+  .install {
+    position: fixed; left: 12px; right: 12px; bottom: calc(12px + env(safe-area-inset-bottom)); z-index: 20;
+    max-width: 480px; margin: 0 auto;
+    display: grid; grid-template-columns: 44px 1fr auto; align-items: center; gap: 12px;
+    background: var(--panel-2); border: 1px solid var(--gold); border-radius: 16px; padding: 12px 12px 12px 14px;
+    box-shadow: 0 12px 40px rgba(0,0,0,.6);
+  }
+  .install[hidden], .install [hidden] { display: none; }
+  .install img { width: 44px; height: 44px; border-radius: 10px; }
+  .install b { display: block; font-size: .95rem; }
+  .install p { color: var(--muted); font-size: .85rem; line-height: 1.4; }
+  .install p svg { width: 16px; height: 16px; vertical-align: -3px; fill: none; stroke: var(--gold-light); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .install .acts { display: flex; align-items: center; gap: 4px; }
+  .install .btn { padding: 9px 16px; font-size: .88rem; }
+  .install .close { background: none; border: 0; color: var(--muted); font-size: 1.4rem; line-height: 1; width: 40px; height: 40px; cursor: pointer; border-radius: 50%; }
+  .install .close:hover { color: var(--text); }
+  body.has-install footer { padding-bottom: 120px; }
+  /* Dentro de la app instalada, respetar la muesca del móvil */
+  @media (display-mode: standalone) { nav { padding-top: env(safe-area-inset-top); } }
+</style>
+</head>
+<body>
+
+<nav aria-label="Menú principal">
+  <div class="wrap">
+    <a class="brand" href="#inicio"><img src="foto%20escudo.png" alt="">Inter Mitente</a>
+    <ul>
+      <li><a href="#resultados">Resultados</a></li>
+      <li><a href="#clasificacion">Clasificación</a></li>
+      <li><a href="#calendario">Calendario</a></li>
+      <li><a href="#goleadores">Goleadores y MVP</a></li>
+      <li><a href="#mejores-goles">Mejores goles</a></li>
+      <li><a href="#plantilla">Plantilla</a></li>
+      <li><a href="#equipaciones">Equipaciones</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header class="hero" id="inicio">
+  <div class="wrap">
+    <img src="foto%20escudo.png" alt="Escudo del Inter Mitente FC">
+    <h1>Inter <span>Mitente</span> FC</h1>
+    <p class="season" id="season">Temporada 2026/27</p>
+    <div id="next"></div>
+    <div class="cta">
+      <a class="btn solid" href="#calendario">Ver calendario</a>
+      <a class="btn" href="#plantilla">Conoce la plantilla</a>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="resultados">
+    <div class="wrap">
+      <div id="summary"></div>
+      <div class="eyebrow">Último resultado</div>
+      <h2 id="last-title">Resultados</h2>
+      <div id="last"></div>
+      <div id="previous"></div>
+    </div>
+  </section>
+
+  <section id="clasificacion" style="padding-top:0">
+    <div class="wrap">
+      <div class="eyebrow">Liga</div>
+      <h2>Clasificación</h2>
+      <div id="standings"></div>
+    </div>
+  </section>
+
+  <section id="calendario" style="padding-top:0">
+    <div class="wrap">
+      <div class="eyebrow">Calendario</div>
+      <h2>Próximos partidos</h2>
+      <div id="fixtures"></div>
+    </div>
+  </section>
+
+  <section id="goleadores" style="padding-top:0">
+    <div class="wrap">
+      <div class="eyebrow">Temporada</div>
+      <h2>Los mejores</h2>
+      <div class="leaders">
+        <div>
+          <h3 class="sub">Máximos goleadores</h3>
+          <div id="top-scorers"></div>
+        </div>
+        <div>
+          <h3 class="sub">MVP de los partidos</h3>
+          <div id="top-mvps"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="mejores-goles" style="padding-top:0">
+    <div class="wrap">
+      <div class="eyebrow">Vídeos</div>
+      <h2>Mejores goles</h2>
+      <div id="videos"></div>
+    </div>
+  </section>
+
+  <section id="plantilla" style="padding-top:0">
+    <div class="wrap">
+      <div class="eyebrow">El equipo</div>
+      <h2>Plantilla</h2>
+      <div class="filters" id="filters" role="group" aria-label="Filtrar por posición"></div>
+      <div class="squad" id="squad"></div>
+    </div>
+  </section>
+
+  <section id="equipaciones" style="padding-top:0">
+    <div class="wrap">
+      <div class="eyebrow">Equipaciones</div>
+      <h2>Nuestras camisetas</h2>
+      <div class="kits">
+        <div class="kit home">
+          <img src="equipacion%20local.png" alt="Equipación local azul y negra">
+          <h3>Local</h3>
+          <p>Rayas azules y negras con detalles dorados</p>
+          <a class="btn solid kit-order" data-kit="Local" href="#">Pide la tuya</a>
+        </div>
+        <div class="kit away">
+          <img src="equipacion%20visitante.png" alt="Equipación visitante rosa">
+          <h3>Visitante</h3>
+          <p>Rosa con cuello y puños negros</p>
+          <a class="btn solid kit-order" data-kit="Visitante" href="#">Pide la tuya</a>
+        </div>
+      </div>
+      <p class="kits-note">Al pulsar se abre un correo para que nos digas tu talla y, si quieres, nombre y dorsal. También puedes escribirnos a <a id="order-mail" href="#"></a>.</p>
+    </div>
+  </section>
+
+  <section id="nosotros" style="padding-top:0">
+    <div class="wrap">
+      <div class="eyebrow">El club</div>
+      <h2>Sobre nosotros</h2>
+      <div class="about">
+        <img src="foto%20escudo.png" alt="Escudo del Inter Mitente FC">
+        <div id="about-text"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="foot-links" id="foot-links"></div>
+  <img src="foto%20escudo.png" alt="">
+  <span id="footer-text">Inter Mitente FC · Temporada 2026/27</span>
+</footer>
+
+<div class="install" id="install" role="dialog" aria-label="Instalar la app" hidden>
+  <img src="iconos/icono-192.png" alt="">
+  <div><b>Instala la app del equipo</b><p id="install-text"></p></div>
+  <div class="acts">
+    <button class="btn solid" id="install-btn" type="button" hidden>Instalar</button>
+    <button class="close" id="install-close" type="button" aria-label="Cerrar">×</button>
+  </div>
+</div>
+
+<!-- Todos los datos (partidos, resultados, plantilla) están en datos.js -->
+<script src="datos.js"></script>
+<script>
+  // ---------- Ayudas ----------
+  const $ = id => document.getElementById(id);
+  const img = src => `<img src="${encodeURI(src)}" alt="">`;
+  const norm = s => String(s).trim().toLowerCase();
+  const US = { name: CLUB.nombre, logo: CLUB.escudo, us: true };
+
+  // Devuelve quién es local y quién visitante, y el marcador en ese orden
+  function match(p) {
+    const rival = { name: p.rival, logo: p.escudo, us: false };
+    const home = p.local ? US : rival;
+    const away = p.local ? rival : US;
+    let gh = null, ga = null;
+    if (p.goles) {
+      gh = p.local ? p.goles.nosotros : p.goles.rival;
+      ga = p.local ? p.goles.rival : p.goles.nosotros;
+    }
+    return { home, away, gh, ga };
+  }
+  const outcome = g =>
+    g.nosotros > g.rival ? { cls: "win",  text: "VICTORIA" } :
+    g.nosotros < g.rival ? { cls: "loss", text: "DERROTA" }  :
+                           { cls: "draw", text: "EMPATE" };
+  const when = p => [p.fecha, p.hora && p.hora + "h"].filter(Boolean).join(" · ");
+  const scoreHTML = m =>
+    `<span class="${m.home.us ? "us" : ""}">${m.gh}</span> - <span class="${m.away.us ? "us" : ""}">${m.ga}</span>`;
+
+  // ---------- Separar jugados y pendientes ----------
+  const ordered = [...PARTIDOS].sort((a, b) => a.jornada - b.jornada);
+  const played  = ordered.filter(p => p.goles);
+  const last = played[played.length - 1];
+  // Pendientes: partidos sin resultado y descansos que aún no han pasado
+  const pending = ordered.filter(p => !p.goles && (!last || p.jornada > last.jornada));
+  const next = pending.find(p => !p.descanso);
+
+  $("season").textContent = "Temporada " + CLUB.temporada;
+  $("footer-text").textContent = `${CLUB.nombre} FC · Temporada ${CLUB.temporada}`;
+
+  // ---------- Resumen de temporada y racha ----------
+  if (played.length) {
+    const t = { g: 0, e: 0, p: 0, gf: 0, gc: 0 };
+    played.forEach(p => {
+      t.gf += p.goles.nosotros; t.gc += p.goles.rival;
+      const c = outcome(p.goles).cls;
+      t[c === "win" ? "g" : c === "draw" ? "e" : "p"]++;
+    });
+    const dg = t.gf - t.gc;
+    const letter = { win: "V", draw: "E", loss: "D" };
+    const racha = played.slice(-5).map(p => {
+      const o = outcome(p.goles);
+      return `<span class="dot ${o.cls}" title="Jornada ${p.jornada}: ${o.text.toLowerCase()} ${p.goles.nosotros}-${p.goles.rival} vs ${p.rival}">${letter[o.cls]}</span>`;
+    }).join("");
+    $("summary").innerHTML = `
+      <div class="eyebrow">La temporada en cifras</div>
+      <h2>Cómo vamos</h2>
+      <div class="summary">
+        <div class="stat"><div class="k">Balance · ${played.length} PJ</div><div class="v">${t.g}-${t.e}-${t.p}<small>V-E-D</small></div></div>
+        <div class="stat"><div class="k">A favor</div><div class="v">${t.gf}<small>${t.gf === 1 ? "gol" : "goles"}</small></div></div>
+        <div class="stat"><div class="k">En contra</div><div class="v">${t.gc}<small>${t.gc === 1 ? "gol" : "goles"}</small></div></div>
+        <div class="stat"><div class="k">Diferencia</div><div class="v">${dg > 0 ? "+" : ""}${dg}</div></div>
+      </div>
+      <div class="form" aria-label="Racha de los últimos partidos, del más antiguo al más reciente">
+        Racha ${racha}
+      </div>`;
+  }
+
+  // ---------- Próximo partido (portada) ----------
+  // Fecha del partido a partir de "dd/mm/aaaa" y "hh:mm"
+  function kickoff(p) {
+    const d = String(p.fecha || "").match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+    if (!d) return null;
+    const [h, mi] = String(p.hora || "0:0").split(":").map(Number);
+    return new Date(+d[3], d[2] - 1, +d[1], h || 0, mi || 0);
+  }
+  function countdown(p) {
+    const k = kickoff(p);
+    if (!k) return "";
+    const today = new Date(); today.setHours(0, 0, 0, 0);
+    const day = new Date(k); day.setHours(0, 0, 0, 0);
+    const days = Math.round((day - today) / 864e5);
+    if (days < 0) return "";
+    if (days === 0) return p.hora ? `¡Hoy a las ${p.hora}h!` : "¡Hoy hay partido!";
+    if (days === 1) return p.hora ? `Mañana a las ${p.hora}h` : "Mañana";
+    return `Faltan ${days} días`;
+  }
+  function icsLink(p, m) {
+    const k = kickoff(p);
+    if (!k || !p.hora) return "";
+    const pad = n => String(n).padStart(2, "0");
+    const fmt = d => `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
+    const esc = s => String(s).replace(/[\\,;]/g, c => "\\" + c);
+    const end = new Date(k.getTime() + 90 * 60000);
+    const ics = [
+      "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Inter Mitente FC//ES",
+      "BEGIN:VEVENT",
+      `UID:jornada-${p.jornada}-${CLUB.temporada.replace("/", "-")}@intermitente`,
+      `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, "").slice(0, 15)}Z`,
+      `DTSTART:${fmt(k)}`, `DTEND:${fmt(end)}`,
+      `SUMMARY:${esc(`${m.home.name} vs ${m.away.name} (Jornada ${p.jornada})`)}`,
+      p.campo ? `LOCATION:${esc(p.campo)}` : "",
+      p.mapa ? `URL:${p.mapa}` : "",
+      "END:VEVENT", "END:VCALENDAR",
+    ].filter(Boolean).join("\r\n");
+    return `<a class="btn" download="jornada-${p.jornada}.ics"
+      href="data:text/calendar;charset=utf-8,${encodeURIComponent(ics)}">Añadir al calendario</a>`;
+  }
+
+  if (next) {
+    const m = match(next);
+    const info = [when(next), next.campo && `Campo: <b>${next.campo}</b>`].filter(Boolean).join(" · ");
+    const cd = countdown(next);
+    const convocatoria = [
+      `⚽ Jornada ${next.jornada}: ${m.home.name} vs ${m.away.name}`,
+      when(next) ? `📅 ${when(next)}` : "📅 Fecha por confirmar",
+      next.campo && `📍 ${next.campo}`,
+      next.mapa,
+      "¡Vamos Inter Mitente!",
+    ].filter(Boolean).join("\n");
+    $("next").innerHTML = `
+      <div class="next-card">
+        <div class="eyebrow">Próximo partido · Jornada ${next.jornada}</div>
+        <div class="next-teams">
+          <div class="t ${m.home.us ? "us" : ""}">${img(m.home.logo)}${m.home.name}</div>
+          <div class="vs">VS</div>
+          <div class="t ${m.away.us ? "us" : ""}">${img(m.away.logo)}${m.away.name}</div>
+        </div>
+        ${cd ? `<p class="countdown">${cd}</p>` : ""}
+        <p class="info">${info || "Fecha, hora y campo por confirmar"}</p>
+        ${next.mapa ? `<a class="map" href="${next.mapa}" target="_blank" rel="noopener">Cómo llegar al campo</a>` : ""}
+        <div class="next-actions">
+          ${icsLink(next, m)}
+          <a class="btn" target="_blank" rel="noopener"
+             href="https://wa.me/?text=${encodeURIComponent(convocatoria)}">Compartir convocatoria</a>
+        </div>
+      </div>`;
+  }
+
+  // ---------- Último resultado ----------
+  if (last) {
+    const m = match(last);
+    const o = outcome(last.goles);
+    const goleadores = (last.goleadores || []).map(n => `<b>${n}</b>`).join(", ");
+    const shareText =
+      `${m.home.name} ${m.gh} - ${m.ga} ${m.away.name} (Jornada ${last.jornada})` +
+      (last.goleadores && last.goleadores.length ? `\nGoles: ${last.goleadores.join(", ")}` : "") +
+      (last.mvp ? `\nMVP: ${last.mvp}` : "");
+    $("last-title").textContent = "Jornada " + last.jornada;
+    $("last").innerHTML = `
+      <div class="result">
+        <div class="meta">
+          <span>${when(last) ? `<b>${when(last)}</b>` : ""}</span>
+          <span>${last.campo ? `Campo: <b>${last.campo}</b>` : ""}</span>
+        </div>
+        <div class="scoreline">
+          <div class="team ${m.home.us ? "us" : ""}">${img(m.home.logo)}${m.home.name}</div>
+          <div class="score">${scoreHTML(m)}</div>
+          <div class="team ${m.away.us ? "us" : ""}">${img(m.away.logo)}${m.away.name}</div>
+        </div>
+        <div class="result-foot">
+          <span class="badge ${o.cls}">${o.text}</span>
+          ${goleadores ? `<p class="scorers">Goles: ${goleadores}</p>` : ""}
+          ${last.mvp ? `<p class="mvp-line"><span class="badge">MVP</span><b>${last.mvp}</b></p>` : ""}
+          <a class="btn share" target="_blank" rel="noopener"
+             href="https://wa.me/?text=${encodeURIComponent(shareText)}">Compartir resultado</a>
+        </div>
+      </div>`;
+  } else {
+    $("last").innerHTML = `<p class="empty">Todavía no se ha jugado ningún partido.</p>`;
+  }
+
+  // ---------- Resultados anteriores ----------
+  const previous = played.slice(0, -1).reverse();
+  if (previous.length) {
+    $("previous").innerHTML = `<h3 class="sub">Resultados anteriores</h3>
+      <div class="fixtures">${previous.map(p => {
+        const m = match(p);
+        return fixtureRow(p, m, `<div class="vs played">${scoreHTML(m)}</div>`, false);
+      }).join("")}</div>`;
+  }
+
+  // ---------- Calendario ----------
+  function side(t, cls) {
+    return `<div class="side ${cls}${t.us ? " us" : ""}">` +
+      (cls === "home" ? `${t.name}${img(t.logo)}` : `${img(t.logo)}${t.name}`) + `</div>`;
+  }
+  function fixtureRow(p, m, middle, isNext) {
+    return `<div class="fixture${isNext ? " next" : ""}">
+      <div class="when"><b>Jornada ${p.jornada}</b>${when(p) ? `<span>${when(p)}</span>` : ""}${isNext ? '<span class="tag">PRÓXIMO</span>' : ""}</div>
+      ${side(m.home, "home")}
+      ${middle}
+      ${side(m.away, "away")}
+    </div>`;
+  }
+  function restRow(p) {
+    return `<div class="fixture rest">
+      <div class="when"><b>Jornada ${p.jornada}</b>${when(p) ? `<span>${when(p)}</span>` : ""}</div>
+      <div class="rest-text">Jornada de descanso</div>
+    </div>`;
+  }
+  if (pending.length) {
+    const missingDates = pending.some(p => !p.descanso && !p.fecha);
+    // En el móvil solo se ven los 3 primeros; el resto se despliega con el botón
+    const VISIBLES = 3;
+    const rows = pending.map((p, i) => {
+      const row = p.descanso ? restRow(p) : fixtureRow(p, match(p), `<div class="vs">VS</div>`, p === next);
+      return i < VISIBLES ? row : row.replace('class="fixture', 'class="fixture extra');
+    });
+    const hidden = pending.length - VISIBLES;
+    $("fixtures").innerHTML =
+      (missingDates ? `<p class="note">Las fechas y horas que faltan están por confirmar.</p>` : "") +
+      `<div class="fixtures collapsed" id="fixture-list">${rows.join("")}</div>` +
+      (hidden > 0 ? `<button class="btn more-btn" id="more-fixtures" type="button" aria-expanded="false" aria-controls="fixture-list">Ver calendario completo (${hidden} más)</button>` : "");
+    const moreBtn = $("more-fixtures");
+    if (moreBtn) moreBtn.addEventListener("click", () => {
+      const list = $("fixture-list");
+      const open = list.classList.toggle("collapsed") === false;
+      moreBtn.setAttribute("aria-expanded", open);
+      moreBtn.textContent = open ? "Ver menos" : `Ver calendario completo (${hidden} más)`;
+    });
+  } else {
+    $("fixtures").innerHTML = `<p class="empty">No quedan partidos por jugar esta temporada.</p>`;
+  }
+
+  // ---------- Rankings: goleadores (de la plantilla) y MVPs (de los partidos) ----------
+  // items: [{ nombre, n }]. Empatados comparten puesto.
+  function ranking(items, singular, plural, emptyText) {
+    const sorted = items.filter(x => x.n > 0)
+      .sort((a, b) => b.n - a.n || a.nombre.localeCompare(b.nombre));
+    // Top 5, pero sin dejar fuera a los que empatan con el 5º
+    const top = sorted.filter((x, i) => i < 5 || (sorted[4] && x.n === sorted[4].n));
+    if (!top.length) return `<p class="empty">${emptyText}</p>`;
+    let rank = 0, prev = null;
+    return `<ol class="scorers-list">${top.map((x, i) => {
+      if (x.n !== prev) { rank = i + 1; prev = x.n; }
+      const j = JUGADORES.find(p => norm(p.nombre) === norm(x.nombre));
+      return `<li>
+        <span class="rank">${rank}</span>
+        <span class="who"><b>${x.nombre}</b>${j ? `<span>${j.posicion} · Dorsal ${j.dorsal}</span>` : ""}</span>
+        <span class="goals">${x.n}<small>${x.n === 1 ? singular : plural}</small></span>
+      </li>`;
+    }).join("")}</ol>`;
+  }
+  $("top-scorers").innerHTML = ranking(
+    JUGADORES.map(j => ({ nombre: j.nombre, n: j.goles })), "gol", "goles", "Todavía no ha marcado nadie.");
+
+  const mvpCount = {};
+  played.forEach(p => {
+    const name = String(p.mvp || "").trim();
+    if (!name) return;
+    const j = JUGADORES.find(x => norm(x.nombre) === norm(name));
+    const key = j ? j.nombre : name;
+    mvpCount[key] = (mvpCount[key] || 0) + 1;
+  });
+  $("top-mvps").innerHTML = ranking(
+    Object.entries(mvpCount).map(([nombre, n]) => ({ nombre, n })), "vez", "veces", "Todavía no hay ningún MVP elegido.");
+
+  // ---------- Mejores goles (YouTube) ----------
+  function youtubeId(url) {
+    const m = String(url).match(/(?:youtu\.be\/|v=|shorts\/|embed\/)([A-Za-z0-9_-]{11})/);
+    return m ? m[1] : null;
+  }
+  const videos = MEJORES_GOLES.map(v => ({ ...v, id: youtubeId(v.youtube) })).filter(v => v.id);
+  $("videos").innerHTML = videos.length
+    ? `<div class="videos">${videos.map(v => `
+        <div class="video">
+          <div class="frame">
+            <iframe src="https://www.youtube-nocookie.com/embed/${v.id}" title="${v.titulo}" loading="lazy"
+              allow="accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+          <div class="info">
+            <b>${v.titulo}</b>
+            <span>${[v.jugador, v.jornada && "Jornada " + v.jornada, v.temporada && "Temporada " + v.temporada].filter(Boolean).join(" · ")}</span>
+            <a href="https://www.youtube.com/watch?v=${v.id}" target="_blank" rel="noopener">Ver en YouTube →</a>
+          </div>
+        </div>`).join("")}</div>`
+    : `<div class="empty-box">Muy pronto subiremos aquí los mejores goles de la temporada.</div>`;
+
+  // ---------- Pedir camiseta (correo) ----------
+  document.querySelectorAll(".kit-order").forEach(btn => {
+    const kit = btn.dataset.kit;
+    const asunto = `Pedido camiseta ${kit.toLowerCase()} - Inter Mitente`;
+    const cuerpo = `Hola, me gustaría pedir la camiseta ${kit.toLowerCase()}.\n\nTalla: \nNombre y dorsal (opcional): \nMi nombre: \n\nGracias.`;
+    btn.href = `mailto:${CORREO}?subject=${encodeURIComponent(asunto)}&body=${encodeURIComponent(cuerpo)}`;
+    btn.setAttribute("aria-label", `Pedir la camiseta ${kit.toLowerCase()} por correo`);
+  });
+  $("order-mail").href = `mailto:${CORREO}`;
+  $("order-mail").textContent = CORREO;
+
+  // ---------- Clasificación ----------
+  const logos = { [norm(CLUB.nombre)]: CLUB.escudo };
+  PARTIDOS.forEach(p => { if (p.rival) logos[norm(p.rival)] = p.escudo; });
+  const tabla = CLASIFICACION
+    .map(c => ({ ...c, pts: 3 * c.g + c.e, dg: c.gf - c.gc, us: norm(c.equipo) === norm(CLUB.nombre) }))
+    // Si empatan en todo, se mantiene el orden de datos.js (el de la clasificación oficial)
+    .sort((a, b) => b.pts - a.pts || b.dg - a.dg || b.gf - a.gf);
+  $("standings").innerHTML = tabla.some(c => c.pj > 0)
+    ? `<div class="table-wrap"><table class="standings">
+        <thead><tr>
+          <th scope="col" class="pos">#</th><th scope="col" class="club">EQUIPO</th>
+          <th scope="col" title="Partidos jugados">PJ</th>
+          <th scope="col" class="opt" title="Ganados">G</th><th scope="col" class="opt" title="Empatados">E</th><th scope="col" class="opt" title="Perdidos">P</th>
+          <th scope="col" class="opt" title="Goles a favor">GF</th><th scope="col" class="opt" title="Goles en contra">GC</th>
+          <th scope="col" title="Diferencia de goles">DG</th><th scope="col" title="Puntos">PTS</th>
+        </tr></thead>
+        <tbody>${tabla.map((c, i) => `<tr class="${c.us ? "us" : ""}">
+          <td class="pos">${i + 1}</td>
+          <td class="club"><span>${logos[norm(c.equipo)] ? img(logos[norm(c.equipo)]) : ""}${c.equipo}</span></td>
+          <td>${c.pj}</td>
+          <td class="opt">${c.g}</td><td class="opt">${c.e}</td><td class="opt">${c.p}</td>
+          <td class="opt">${c.gf}</td><td class="opt">${c.gc}</td>
+          <td>${c.dg > 0 ? "+" : ""}${c.dg}</td><td class="pts">${c.pts}</td>
+        </tr>`).join("")}</tbody>
+      </table></div>`
+    : `<div class="empty-box">Muy pronto publicaremos aquí la clasificación de la liga.</div>`;
+
+  // ---------- Pie: contacto y redes ----------
+  const redes = { instagram: "Instagram", tiktok: "TikTok", youtube: "YouTube", x: "X" };
+  $("foot-links").innerHTML =
+    `<a href="mailto:${CORREO}">Contacto</a>` +
+    Object.entries(redes)
+      .filter(([k]) => typeof REDES !== "undefined" && REDES[k])
+      .map(([k, label]) => `<a href="${REDES[k]}" target="_blank" rel="noopener">${label}</a>`).join("");
+
+  // ---------- Menú: sección activa y aviso de scroll en móvil ----------
+  const navList = document.querySelector("nav ul");
+  const navLinks = [...navList.querySelectorAll("a")];
+  const updateMore = () => navList.classList.toggle("more",
+    navList.scrollLeft + navList.clientWidth < navList.scrollWidth - 4);
+  navList.addEventListener("scroll", updateMore, { passive: true });
+  window.addEventListener("resize", updateMore);
+  updateMore();
+  const spy = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if (!en.isIntersecting) return;
+      navLinks.forEach(a => {
+        const on = a.getAttribute("href") === "#" + en.target.id;
+        a.classList.toggle("active", on);
+        if (on && navList.scrollWidth > navList.clientWidth)
+          navList.scrollTo({ left: a.offsetLeft - navList.offsetLeft - 16, behavior: "smooth" });
+      });
+    });
+  }, { rootMargin: "-40% 0px -55% 0px" });
+  navLinks.forEach(a => { const s = document.querySelector(a.getAttribute("href")); if (s) spy.observe(s); });
+
+  // ---------- Sobre nosotros ----------
+  $("about-text").innerHTML = SOBRE_NOSOTROS.map(p => `<p>${p}</p>`).join("");
+
+  // ---------- Plantilla ----------
+  const positions = ["Todos", "Portero", "Defensa", "Ala", "Centrocampista", "Delantero"];
+  const filtersEl = $("filters");
+  const squadEl = $("squad");
+
+  function renderSquad(pos) {
+    squadEl.innerHTML = JUGADORES
+      .filter(j => pos === "Todos" || j.posicion === pos)
+      .map(j => `<div class="player">
+        <div class="num" aria-hidden="true">${j.dorsal}</div>
+        <div class="pos">${j.posicion} · ${j.dorsal}</div>
+        <div class="name">${j.nombre}</div>
+        <div class="stats"><span><b>${j.partidos}</b>PJ</span><span><b>${j.goles}</b>${j.goles === 1 ? "Gol" : "Goles"}</span></div>
+      </div>`).join("");
+    filtersEl.querySelectorAll("button").forEach(b =>
+      b.setAttribute("aria-pressed", b.dataset.pos === pos ? "true" : "false"));
+  }
+
+  filtersEl.innerHTML = positions.map(p => `<button type="button" data-pos="${p}">${p}</button>`).join("");
+  filtersEl.addEventListener("click", e => { if (e.target.dataset.pos) renderSquad(e.target.dataset.pos); });
+  renderSquad("Todos");
+
+  // ---------- App instalable ----------
+  if ("serviceWorker" in navigator && location.protocol !== "file:") {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  }
+  (() => {
+    const box = $("install"), text = $("install-text"), btn = $("install-btn");
+    const ua = navigator.userAgent;
+    const installed = matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+    const ios = /iPhone|iPad|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+    const iosSafari = ios && !/CriOS|FxiOS|EdgiOS|Instagram|FBAN|FBAV|WhatsApp|GSA/.test(ua);
+    const shareIcon = `<svg viewBox="0 0 24 24" aria-label="Compartir"><path d="M12 3v12M8 7l4-4 4 4"/><path d="M6 11v9h12v-9"/></svg>`;
+    let dismissed = false;
+    try { dismissed = localStorage.getItem("installDismissed") === "1"; } catch (e) {}
+    let deferred = null;
+
+    function show(html, withButton) {
+      text.innerHTML = html;
+      btn.hidden = !withButton;
+      box.hidden = false;
+      document.body.classList.add("has-install");
+    }
+    function hide() { box.hidden = true; document.body.classList.remove("has-install"); }
+    // Enlace "Instalar app" en el pie, para volver a ver el aviso
+    function footLink() {
+      if (document.getElementById("install-link")) return;
+      const a = document.createElement("a");
+      a.href = "#"; a.id = "install-link"; a.textContent = "Instalar app";
+      a.addEventListener("click", e => { e.preventDefault(); offer(true); });
+      $("foot-links").appendChild(a);
+    }
+    function offer(force) {
+      if (installed || (dismissed && !force)) return;
+      if (deferred) show("Tenla en tu pantalla de inicio, como cualquier otra app.", true);
+      else if (iosSafari) show(`Pulsa ${shareIcon} <b style="display:inline">Compartir</b> y luego «Añadir a pantalla de inicio».`, false);
+      else if (ios) show("Abre esta página en <b style=\"display:inline\">Safari</b> para poder instalarla.", false);
+    }
+
+    if (installed) return;
+    window.addEventListener("beforeinstallprompt", e => {
+      e.preventDefault();
+      deferred = e;
+      footLink();
+      offer(false);
+    });
+    btn.addEventListener("click", async () => {
+      if (!deferred) return;
+      deferred.prompt();
+      await deferred.userChoice;
+      deferred = null;
+      hide();
+    });
+    $("install-close").addEventListener("click", () => {
+      hide();
+      try { localStorage.setItem("installDismissed", "1"); } catch (e) {}
+      dismissed = true;
+    });
+    window.addEventListener("appinstalled", hide);
+    if (ios) { footLink(); setTimeout(() => offer(false), 1500); }
+  })();
+</script>
+</body>
+</html>
