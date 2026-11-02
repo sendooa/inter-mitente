@@ -62,12 +62,12 @@
     border-bottom: 1px solid var(--line);
   }
   nav .wrap { display: flex; align-items: center; justify-content: space-between; min-height: 64px; gap: 16px; }
-  .brand { display: flex; align-items: center; gap: 10px; white-space: nowrap; font-family: "Oswald", sans-serif; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+  .brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; white-space: nowrap; font-family: "Oswald", sans-serif; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
   .brand img { width: 38px; height: 38px; }
   nav ul { list-style: none; display: flex; gap: 20px; font-size: .95rem; color: var(--muted); }
   nav ul a { display: inline-block; padding: 10px 0; white-space: nowrap; }
   nav ul a:hover { color: var(--gold-light); }
-  @media (max-width: 1060px) {
+  @media (max-width: 1200px) {
     nav .wrap { flex-wrap: wrap; padding-top: 10px; gap: 4px; }
     nav ul { width: 100%; gap: 20px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
     nav ul::-webkit-scrollbar { display: none; }
@@ -244,6 +244,36 @@
   .video .info a { color: var(--gold-light); font-size: .88rem; font-weight: 600; margin-top: 4px; }
   .empty-box { background: var(--panel); border: 1px dashed var(--line); border-radius: 16px; padding: 28px; color: var(--muted); text-align: center; }
 
+  /* Instagram */
+  .ig-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 20px; margin-bottom: 24px; }
+  .ig-head p { color: var(--muted); max-width: 520px; }
+  .ig-head p b { color: var(--text); }
+  .ig-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+  .ig-item {
+    display: block; width: 100%; padding: 0; text-align: left; cursor: pointer; font: inherit; color: inherit;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; transition: .2s;
+  }
+  .ig-item:hover { border-color: var(--gold); }
+  .ig-item:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 2px; }
+  .ig-item img { width: 100%; aspect-ratio: 1; object-fit: cover; }
+  .ig-item span { display: block; padding: 10px 14px 12px; font-size: .88rem; color: var(--muted); }
+  .ig-item span b { color: var(--text); }
+  .btn.small { font-size: .88rem; padding: 9px 16px; }
+  @media (max-width: 700px) {
+    /* En el móvil, las imágenes en fila y se pasan con el dedo */
+    .ig-grid { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 10px; margin: 0 -16px; padding: 0 16px 6px; scrollbar-width: none; }
+    .ig-grid::-webkit-scrollbar { display: none; }
+    .ig-item { flex: 0 0 72%; scroll-snap-align: center; }
+  }
+
+  /* Visor de imágenes */
+  .viewer { margin: auto; padding: 0; border: 0; background: transparent; max-width: min(92vw, 640px); width: 100%; color: var(--text); }
+  .viewer::backdrop { background: rgba(0,0,0,.85); }
+  .viewer img { width: 100%; border-radius: 12px; }
+  .viewer .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 12px; }
+  .viewer .bar span { color: var(--muted); font-size: .9rem; }
+  .viewer .acts { display: flex; gap: 8px; }
+
   /* Sobre nosotros */
   .about { display: flex; flex-wrap: wrap; align-items: center; gap: 28px; background: linear-gradient(135deg, var(--panel), var(--panel-2)); border: 1px solid var(--line); border-radius: 18px; padding: 28px; }
   .about img { width: 120px; flex: 0 0 auto; }
@@ -293,7 +323,7 @@
 
   /* Menú: sección activa y aviso de que hay más a la derecha */
   nav ul a.active { color: var(--gold-light); box-shadow: inset 0 -2px 0 var(--gold); }
-  @media (max-width: 1060px) {
+  @media (max-width: 1200px) {
     nav ul.more { -webkit-mask-image: linear-gradient(90deg, #000 80%, transparent); mask-image: linear-gradient(90deg, #000 80%, transparent); }
   }
 
@@ -377,6 +407,7 @@
       <li><a href="#calendario">Calendario</a></li>
       <li><a href="#goleadores">Goleadores y MVP</a></li>
       <li><a href="#mejores-goles">Mejores goles</a></li>
+      <li><a href="#instagram">Instagram</a></li>
       <li><a href="#plantilla">Plantilla</a></li>
       <li><a href="#equipaciones">Equipaciones</a></li>
       <li><a href="#nosotros">Nosotros</a></li>
@@ -392,7 +423,7 @@
     <div id="next"></div>
     <div class="cta">
       <a class="btn solid" href="#calendario">Ver calendario</a>
-      <a class="btn" href="#plantilla">Conoce la plantilla</a>
+      <a class="btn" href="#instagram" id="hero-ig">Síguenos en Instagram</a>
     </div>
   </div>
 </header>
@@ -449,6 +480,18 @@
     </div>
   </section>
 
+  <section id="instagram" style="padding-top:0">
+    <div class="wrap">
+      <div class="eyebrow">Redes</div>
+      <h2>En Instagram</h2>
+      <div class="ig-head">
+        <p>Carteles de cada partido y resultados finales. Pulsa una imagen para verla en grande o descargarla.</p>
+        <a class="btn solid" id="ig-follow" target="_blank" rel="noopener" hidden></a>
+      </div>
+      <div id="ig-gallery"></div>
+    </div>
+  </section>
+
   <section id="plantilla" style="padding-top:0">
     <div class="wrap">
       <div class="eyebrow">El equipo</div>
@@ -497,6 +540,17 @@
   <img src="foto%20escudo.png" alt="">
   <span id="footer-text">Inter Mitente FC · Temporada 2026/27</span>
 </footer>
+
+<dialog class="viewer" id="viewer" aria-label="Imagen">
+  <img id="viewer-img" alt="">
+  <div class="bar">
+    <span id="viewer-text"></span>
+    <div class="acts">
+      <a class="btn small" id="viewer-download" download>Descargar</a>
+      <button class="btn solid small" id="viewer-close" type="button">Cerrar</button>
+    </div>
+  </div>
+</dialog>
 
 <div class="install" id="install" role="dialog" aria-label="Instalar la app" hidden>
   <img src="iconos/icono-192.png" alt="">
@@ -639,6 +693,7 @@
         <p class="info">${info || "Fecha, hora y campo por confirmar"}</p>
         ${next.mapa ? `<a class="map" href="${next.mapa}" target="_blank" rel="noopener">Cómo llegar al campo</a>` : ""}
         <div class="next-actions">
+          ${next.cartel ? `<button class="btn" type="button" data-view="${encodeURI(next.cartel)}" data-text="Cartel · Jornada ${next.jornada}">Ver cartel</button>` : ""}
           ${icsLink(next, m)}
           <a class="btn" target="_blank" rel="noopener"
              href="https://wa.me/?text=${encodeURIComponent(convocatoria)}">Compartir convocatoria</a>
@@ -671,8 +726,11 @@
           <span class="badge ${o.cls}">${o.text}</span>
           ${goleadores ? `<p class="scorers">Goles: ${goleadores}</p>` : ""}
           ${last.mvp ? `<p class="mvp-line"><span class="badge">MVP</span><b>${last.mvp}</b></p>` : ""}
-          <a class="btn share" target="_blank" rel="noopener"
-             href="https://wa.me/?text=${encodeURIComponent(shareText)}">Compartir resultado</a>
+          <div class="next-actions" style="margin-top:0">
+            ${last.imagen ? `<button class="btn share" type="button" data-view="${encodeURI(last.imagen)}" data-text="Resultado final · Jornada ${last.jornada}">Ver imagen</button>` : ""}
+            <a class="btn share" target="_blank" rel="noopener"
+               href="https://wa.me/?text=${encodeURIComponent(shareText)}">Compartir resultado</a>
+          </div>
         </div>
       </div>`;
   } else {
@@ -823,6 +881,50 @@
         </tr>`).join("")}</tbody>
       </table></div>`
     : `<div class="empty-box">Muy pronto publicaremos aquí la clasificación de la liga.</div>`;
+
+  // ---------- Instagram: carteles y resultados ----------
+  const igLink = typeof REDES !== "undefined" ? REDES.instagram : "";
+  const igUser = (String(igLink || "").match(/instagram\.com\/([^/?#]+)/) || [])[1];
+  if (igLink) {
+    const follow = $("ig-follow");
+    follow.href = igLink;
+    follow.textContent = igUser ? `Síguenos en @${igUser}` : "Síguenos en Instagram";
+    follow.hidden = false;
+    const heroIg = $("hero-ig");
+    heroIg.href = igLink; heroIg.target = "_blank"; heroIg.rel = "noopener";
+  }
+  // Las más nuevas primero; en cada jornada, el resultado antes que el cartel
+  const igPosts = [];
+  [...ordered].reverse().forEach(p => {
+    if (p.descanso) return;
+    const m = match(p);
+    if (p.imagen && p.goles) igPosts.push({ src: p.imagen, title: `Jornada ${p.jornada} · Resultado`,
+      sub: `${m.home.name} ${m.gh}-${m.ga} ${m.away.name}` });
+    if (p.cartel) igPosts.push({ src: p.cartel, title: `Jornada ${p.jornada} · Cartel`,
+      sub: `${m.home.name} vs ${m.away.name}` });
+  });
+  $("ig-gallery").innerHTML = igPosts.length
+    ? `<div class="ig-grid">${igPosts.map(x => `
+        <button class="ig-item" type="button" data-view="${encodeURI(x.src)}" data-text="${x.title}">
+          <img src="${encodeURI(x.src)}" alt="${x.title}: ${x.sub}" loading="lazy">
+          <span><b>${x.title}</b><br>${x.sub}</span>
+        </button>`).join("")}</div>`
+    : `<div class="empty-box">Muy pronto subiremos aquí los carteles y resultados de cada partido.</div>`;
+
+  // Visor: cualquier botón con data-view abre la imagen en grande
+  const viewer = $("viewer");
+  document.addEventListener("click", e => {
+    const b = e.target.closest("[data-view]");
+    if (!b) return;
+    $("viewer-img").src = b.dataset.view;
+    $("viewer-img").alt = b.dataset.text || "";
+    $("viewer-text").textContent = b.dataset.text || "";
+    $("viewer-download").href = b.dataset.view;
+    if (viewer.showModal) viewer.showModal(); else window.open(b.dataset.view, "_blank");
+  });
+  $("viewer-close").addEventListener("click", () => viewer.close());
+  // Cerrar al pulsar fuera de la imagen
+  viewer.addEventListener("click", e => { if (e.target === viewer) viewer.close(); });
 
   // ---------- Pie: contacto y redes ----------
   const redes = { instagram: "Instagram", tiktok: "TikTok", youtube: "YouTube", x: "X" };

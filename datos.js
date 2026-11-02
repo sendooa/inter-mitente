@@ -22,6 +22,12 @@ const CLUB = {
 //   En cuanto tiene "goles", pasa solo a la sección de resultados.
 // - mvp: el mejor jugador del partido, escrito igual que en la plantilla.
 //   Con eso se monta sola la tabla de MVPs. Si lo dejas en "", no cuenta.
+// - cartel: la imagen de "Matchday" que subís a Instagram antes del partido.
+//   Sale en la tarjeta del próximo partido y en la sección de Instagram.
+// - imagen: la imagen de "Resultado final" que subís después del partido.
+//   Sale en el resultado y en la sección de Instagram.
+//   Guarda las dos en la carpeta "instagram" y escribe aquí su nombre,
+//   por ejemplo: cartel: "instagram/j3-cartel.jpg"
 const PARTIDOS = [
   {
     jornada: 1, local: false, rival: "San Roke F.T.", escudo: "san roke.png",
@@ -29,6 +35,7 @@ const PARTIDOS = [
     goles: { nosotros: 3, rival: 0 },
     goleadores: ["Sandro Martin", "Borja Arroita", "Mario Elvira"],
     mvp: "Josu Postigo",
+    imagen: "instagram/j1-resultado.jpg",
   },
   {
     jornada: 2, local: false, rival: "Elefutbol Fc", escudo: "elefutbol.png",
@@ -36,8 +43,15 @@ const PARTIDOS = [
     goles: { nosotros: 3, rival: 7 },
     goleadores: ["Samuel Sagarna", "Josu Elorrieta", "Sendoa Guerrero"],
     mvp: "",   // no hubo MVP de nuestro equipo
+    cartel: "instagram/j2-cartel.jpg",
+    imagen: "instagram/j2-resultado.jpg",
   },
-  { jornada: 3,  local: true,  rival: "Euskoreading F.C",    escudo: "euskoreading.png" },
+  {
+    jornada: 3, local: true, rival: "Euskoreading F.C", escudo: "euskoreading.png",
+    fecha: "Sáb. 07/11/2026", hora: "17:30", campo: "Lutxana",
+    mapa: "https://www.google.com/maps/search/?api=1&query=Campo+de+f%C3%BAtbol+Lutxana+Barakaldo",
+    cartel: "instagram/j3-cartel.jpg",
+  },
   { jornada: 4,  descanso: true },   // Jornada en la que descansamos
   { jornada: 5,  local: true,  rival: "Blackburn Reventaos", escudo: "blackburn.jpg" },
   { jornada: 6,  local: false, rival: "Kaldotarrak Fkt",     escudo: "kaldotarrak.png" },
@@ -68,19 +82,19 @@ const REDES = {
 // Ponlos en el mismo orden que la clasificación oficial: si dos equipos
 // empatan en todo, se respeta el orden en que están aquí.
 // Mientras todos tengan pj: 0, la web dice que la clasificación llegará pronto.
-// Actualizada tras la jornada 2.
+// Actualizada el 02/11/2026 (jornada 3 de la liga).
 const CLASIFICACION = [
-  { equipo: "Blackburn Reventaos", pj: 1, g: 1, e: 0, p: 0, gf: 5, gc: 1 },
-  { equipo: "Palmeras Kt",         pj: 1, g: 1, e: 0, p: 0, gf: 4, gc: 1 },
-  { equipo: "Elefutbol Fc",        pj: 2, g: 1, e: 0, p: 1, gf: 9, gc: 7 },
-  { equipo: "Rba",                 pj: 1, g: 1, e: 0, p: 0, gf: 4, gc: 2 },
-  { equipo: "Euskoreading F.C",    pj: 1, g: 1, e: 0, p: 0, gf: 4, gc: 2 },
-  { equipo: "Inter Mitente",       pj: 2, g: 1, e: 0, p: 1, gf: 6, gc: 7 },
-  { equipo: "La Patata Mekanika",  pj: 0, g: 0, e: 0, p: 0, gf: 0, gc: 0 },
-  { equipo: "Fc Farsantes",        pj: 1, g: 0, e: 0, p: 1, gf: 2, gc: 4 },
-  { equipo: "Kaldotarrak Fkt",     pj: 1, g: 0, e: 0, p: 1, gf: 1, gc: 4 },
-  { equipo: "San Roke F.T.",       pj: 1, g: 0, e: 0, p: 1, gf: 0, gc: 3 },
-  { equipo: "Eternos Repelega 94", pj: 1, g: 0, e: 0, p: 1, gf: 1, gc: 5 },
+  { equipo: "Blackburn Reventaos", pj: 3, g: 3, e: 0, p: 0, gf: 13, gc: 3 },
+  { equipo: "Rba",                 pj: 2, g: 2, e: 0, p: 0, gf: 6,  gc: 2 },
+  { equipo: "Palmeras Kt",         pj: 3, g: 2, e: 0, p: 1, gf: 9,  gc: 6 },
+  { equipo: "Fc Farsantes",        pj: 3, g: 1, e: 0, p: 2, gf: 14, gc: 8 },
+  { equipo: "Elefutbol Fc",        pj: 2, g: 1, e: 0, p: 1, gf: 9,  gc: 7 },
+  { equipo: "Inter Mitente",       pj: 2, g: 1, e: 0, p: 1, gf: 6,  gc: 7 },
+  { equipo: "La Patata Mekanika",  pj: 2, g: 1, e: 0, p: 1, gf: 3,  gc: 4 },
+  { equipo: "Euskoreading F.C",    pj: 2, g: 1, e: 0, p: 1, gf: 6,  gc: 8 },
+  { equipo: "San Roke F.T.",       pj: 3, g: 1, e: 0, p: 2, gf: 4,  gc: 6 },
+  { equipo: "Eternos Repelega 94", pj: 3, g: 1, e: 0, p: 2, gf: 8,  gc: 15 },
+  { equipo: "Kaldotarrak Fkt",     pj: 3, g: 0, e: 0, p: 3, gf: 2,  gc: 14 },
 ];
 
 // SOBRE NOSOTROS — cada línea entre comillas es un párrafo.
