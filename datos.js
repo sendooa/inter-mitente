@@ -61,13 +61,21 @@ const PARTIDOS = [
     jornada: 5, local: true, rival: "Blackburn Reventaos", escudo: "blackburn.jpg",
     fecha: "Sáb. 14/11/2026", hora: "18:30", campo: "Lutxana",
     mapa: "https://www.google.com/maps/search/?api=1&query=Campo+de+f%C3%BAtbol+Lutxana+Barakaldo",
+    goles: { nosotros: 4, rival: 3 },
+    goleadores: ["Borja Arroita (2)", "Jon Xabier Beltran", "Alex Gonzalo"],
+    mvp: "",
+    imagen: "instagram/j5-resultado.jpg",
   },
-  { jornada: 6,  local: false, rival: "Kaldotarrak Fkt",     escudo: "kaldotarrak.png" },
-  { jornada: 7,  local: true,  rival: "Fc Farsantes",        escudo: "farsantes.jpg" },
-  { jornada: 8,  local: false, rival: "La Patata Mekanika",  escudo: "la patata mekanika.png" },
-  { jornada: 9,  local: true,  rival: "Rba",                 escudo: "rba.jpg" },
-  { jornada: 10, local: false, rival: "Palmeras Kt",         escudo: "palmeras.png" },
-  { jornada: 11, local: true,  rival: "Eternos Repelega 94", escudo: "eternos repelega 94.png" },
+  {
+    jornada: 6, local: false, rival: "Kaldotarrak Fkt", escudo: "kaldotarrak.png",
+    fecha: "Sáb. 21/11/2026", hora: "20:30", campo: "San Jorge 1",
+  },
+  // De la J7 en adelante la liga solo ha confirmado el día: falta hora y campo.
+  { jornada: 7,  local: true,  rival: "Fc Farsantes",        escudo: "farsantes.jpg",          fecha: "Sáb. 28/11/2026" },
+  { jornada: 8,  local: false, rival: "La Patata Mekanika",  escudo: "la patata mekanika.png", fecha: "Sáb. 12/12/2026" },
+  { jornada: 9,  local: true,  rival: "Rba",                 escudo: "rba.jpg",                fecha: "Sáb. 09/01/2027" },
+  { jornada: 10, local: false, rival: "Palmeras Kt",         escudo: "palmeras.png",           fecha: "Sáb. 16/01/2027" },
+  { jornada: 11, local: true,  rival: "Eternos Repelega 94", escudo: "eternos repelega 94.png", fecha: "Sáb. 23/01/2027" },
 ];
 
 // CORREO para pedir camisetas y para contactar con el club
@@ -90,19 +98,19 @@ const REDES = {
 // Ponlos en el mismo orden que la clasificación oficial: si dos equipos
 // empatan en todo, se respeta el orden en que están aquí.
 // Mientras todos tengan pj: 0, la web dice que la clasificación llegará pronto.
-// Actualizada el 09/11/2026 (jornada 4 de la liga).
+// Actualizada el 16/11/2026 (jornada 5 de la liga).
 const CLASIFICACION = [
-  { equipo: "Blackburn Reventaos", pj: 4, g: 3, e: 0, p: 1, gf: 15, gc: 7 },
+  { equipo: "Euskoreading F.C",    pj: 5, g: 4, e: 0, p: 1, gf: 17, gc: 13 },
+  { equipo: "Elefutbol Fc",        pj: 4, g: 3, e: 0, p: 1, gf: 20, gc: 10 },
+  { equipo: "Blackburn Reventaos", pj: 5, g: 3, e: 0, p: 2, gf: 18, gc: 11 },
   { equipo: "Palmeras Kt",         pj: 4, g: 3, e: 0, p: 1, gf: 10, gc: 6 },
-  { equipo: "Euskoreading F.C",    pj: 4, g: 3, e: 0, p: 1, gf: 13, gc: 10 },
-  { equipo: "Elefutbol Fc",        pj: 3, g: 2, e: 0, p: 1, gf: 13, gc: 9 },
+  { equipo: "San Roke F.T.",       pj: 5, g: 2, e: 1, p: 2, gf: 11, gc: 12 },
   { equipo: "Rba",                 pj: 3, g: 2, e: 0, p: 1, gf: 6,  gc: 3 },
-  { equipo: "Fc Farsantes",        pj: 4, g: 1, e: 1, p: 2, gf: 18, gc: 12 },
-  { equipo: "La Patata Mekanika",  pj: 3, g: 1, e: 1, p: 1, gf: 7,  gc: 8 },
-  { equipo: "San Roke F.T.",       pj: 4, g: 1, e: 1, p: 2, gf: 8,  gc: 10 },
+  { equipo: "Inter Mitente",       pj: 4, g: 2, e: 0, p: 2, gf: 10, gc: 13 },
+  { equipo: "Fc Farsantes",        pj: 5, g: 1, e: 1, p: 3, gf: 21, gc: 16 },
+  { equipo: "La Patata Mekanika",  pj: 4, g: 1, e: 1, p: 2, gf: 9,  gc: 11 },
   { equipo: "Eternos Repelega 94", pj: 4, g: 1, e: 1, p: 2, gf: 12, gc: 19 },
-  { equipo: "Inter Mitente",       pj: 3, g: 1, e: 0, p: 2, gf: 6,  gc: 10 },
-  { equipo: "Kaldotarrak Fkt",     pj: 4, g: 0, e: 0, p: 4, gf: 4,  gc: 18 },
+  { equipo: "Kaldotarrak Fkt",     pj: 5, g: 0, e: 0, p: 5, gf: 5,  gc: 25 },
 ];
 
 // SOBRE NOSOTROS — cada línea entre comillas es un párrafo.
@@ -124,21 +132,21 @@ const MEJORES_GOLES = [
 
 // PLANTILLA (partidos jugados y goles de cada jugador)
 const JUGADORES = [
-  { dorsal: 13, nombre: "Ander López",        posicion: "Portero",        partidos: 3, goles: 0 },
-  { dorsal: 2,  nombre: "Josu Postigo",       posicion: "Defensa",        partidos: 3, goles: 0 },
-  { dorsal: 3,  nombre: "Ander Bolado",       posicion: "Defensa",        partidos: 2, goles: 0 },
+  { dorsal: 13, nombre: "Ander López",        posicion: "Portero",        partidos: 4, goles: 0 },
+  { dorsal: 2,  nombre: "Josu Postigo",       posicion: "Defensa",        partidos: 4, goles: 0 },
+  { dorsal: 3,  nombre: "Ander Bolado",       posicion: "Defensa",        partidos: 3, goles: 0 },
   { dorsal: 4,  nombre: "Gorka Ramos",        posicion: "Defensa",        partidos: 1, goles: 0 },
   { dorsal: 10, nombre: "Ander Guerrero",     posicion: "Defensa",        partidos: 3, goles: 0 },
-  { dorsal: 32, nombre: "Josu Elorrieta",     posicion: "Defensa",        partidos: 2, goles: 1 },
+  { dorsal: 32, nombre: "Josu Elorrieta",     posicion: "Defensa",        partidos: 3, goles: 1 },
   { dorsal: 6,  nombre: "Arkaitz Ferreira",   posicion: "Ala",            partidos: 3, goles: 0 },
-  { dorsal: 14, nombre: "Samuel Sagarna",     posicion: "Ala",            partidos: 3, goles: 1 },
+  { dorsal: 14, nombre: "Samuel Sagarna",     posicion: "Ala",            partidos: 4, goles: 1 },
   { dorsal: 22, nombre: "Ander Tena",         posicion: "Ala",            partidos: 2, goles: 0 },
-  { dorsal: 8,  nombre: "Borja Arroita",      posicion: "Centrocampista", partidos: 1, goles: 1 },
   { dorsal: 11, nombre: "Oier Tena",          posicion: "Centrocampista", partidos: 1, goles: 0 },
-  { dorsal: 30, nombre: "Diego Sánchez",      posicion: "Centrocampista", partidos: 2, goles: 0 },
+  { dorsal: 8,  nombre: "Borja Arroita",      posicion: "Centrocampista", partidos: 2, goles: 3 },
+  { dorsal: 30, nombre: "Diego Sánchez",      posicion: "Centrocampista", partidos: 3, goles: 0 },
   { dorsal: 45, nombre: "Mario Elvira",       posicion: "Centrocampista", partidos: 2, goles: 1 },
-  { dorsal: 71, nombre: "Sandro Martin",      posicion: "Centrocampista", partidos: 3, goles: 1 },
-  { dorsal: 80, nombre: "Sendoa Guerrero",    posicion: "Centrocampista", partidos: 3, goles: 1 },
-  { dorsal: 17, nombre: "Jon Xabier Beltran", posicion: "Delantero",      partidos: 3, goles: 0 },
-  { dorsal: 99, nombre: "Alex Gonzalo",       posicion: "Delantero",      partidos: 2, goles: 0 },
+  { dorsal: 71, nombre: "Sandro Martin",      posicion: "Centrocampista", partidos: 4, goles: 1 },
+  { dorsal: 80, nombre: "Sendoa Guerrero",    posicion: "Centrocampista", partidos: 4, goles: 1 },
+  { dorsal: 17, nombre: "Jon Xabier Beltran", posicion: "Delantero",      partidos: 4, goles: 1 },
+  { dorsal: 99, nombre: "Alex Gonzalo",       posicion: "Delantero",      partidos: 3, goles: 1 },
 ];
