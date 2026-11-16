@@ -141,7 +141,7 @@ const JUGADORES = [
   { dorsal: 6,  nombre: "Arkaitz Ferreira",   posicion: "Ala",            partidos: 3, goles: 0 },
   { dorsal: 14, nombre: "Samuel Sagarna",     posicion: "Ala",            partidos: 4, goles: 1 },
   { dorsal: 22, nombre: "Ander Tena",         posicion: "Ala",            partidos: 2, goles: 0 },
-  { dorsal: 0,  nombre: "Oier Tena",          posicion: "Centrocampista", partidos: 1, goles: 0 },
+  { dorsal: 11, nombre: "Oier Tena",          posicion: "Centrocampista", partidos: 1, goles: 0 },
   { dorsal: 8,  nombre: "Borja Arroita",      posicion: "Centrocampista", partidos: 2, goles: 3 },
   { dorsal: 30, nombre: "Diego Sánchez",      posicion: "Centrocampista", partidos: 3, goles: 0 },
   { dorsal: 45, nombre: "Mario Elvira",       posicion: "Centrocampista", partidos: 2, goles: 1 },
