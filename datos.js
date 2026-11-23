@@ -69,6 +69,11 @@ const PARTIDOS = [
   {
     jornada: 6, local: false, rival: "Kaldotarrak Fkt", escudo: "kaldotarrak.png",
     fecha: "Sáb. 21/11/2026", hora: "20:30", campo: "San Jorge 1",
+    goles: { nosotros: 2, rival: 1 },
+    goleadores: [],   // falta saber quién marcó los dos goles
+    mvp: "",
+    cartel: "instagram/j6-cartel.jpg",
+    imagen: "instagram/j6-resultado.jpg",
   },
   // De la J7 en adelante la liga solo ha confirmado el día: falta hora y campo.
   { jornada: 7,  local: true,  rival: "Fc Farsantes",        escudo: "farsantes.jpg",          fecha: "Sáb. 28/11/2026" },
