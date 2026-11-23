@@ -63,15 +63,15 @@ const PARTIDOS = [
     mapa: "https://www.google.com/maps/search/?api=1&query=Campo+de+f%C3%BAtbol+Lutxana+Barakaldo",
     goles: { nosotros: 4, rival: 3 },
     goleadores: ["Borja Arroita (2)", "Jon Xabier Beltran", "Alex Gonzalo"],
-    mvp: "",
+    mvp: "Ander López",
     imagen: "instagram/j5-resultado.jpg",
   },
   {
     jornada: 6, local: false, rival: "Kaldotarrak Fkt", escudo: "kaldotarrak.png",
     fecha: "Sáb. 21/11/2026", hora: "20:30", campo: "San Jorge 1",
     goles: { nosotros: 2, rival: 1 },
-    goleadores: [],   // falta saber quién marcó los dos goles
-    mvp: "",
+    goleadores: ["Mario Elvira", "Josu Postigo"],
+    mvp: "Josu Postigo",
     cartel: "instagram/j6-cartel.jpg",
     imagen: "instagram/j6-resultado.jpg",
   },
@@ -138,7 +138,7 @@ const MEJORES_GOLES = [
 // PLANTILLA (partidos jugados y goles de cada jugador)
 const JUGADORES = [
   { dorsal: 13, nombre: "Ander López",        posicion: "Portero",        partidos: 4, goles: 0 },
-  { dorsal: 2,  nombre: "Josu Postigo",       posicion: "Defensa",        partidos: 4, goles: 0 },
+  { dorsal: 2,  nombre: "Josu Postigo",       posicion: "Defensa",        partidos: 4, goles: 1 },
   { dorsal: 3,  nombre: "Ander Bolado",       posicion: "Defensa",        partidos: 3, goles: 0 },
   { dorsal: 4,  nombre: "Gorka Ramos",        posicion: "Defensa",        partidos: 1, goles: 0 },
   { dorsal: 10, nombre: "Ander Guerrero",     posicion: "Defensa",        partidos: 3, goles: 0 },
@@ -149,7 +149,7 @@ const JUGADORES = [
   { dorsal: 11, nombre: "Oier Tena",          posicion: "Centrocampista", partidos: 1, goles: 0 },
   { dorsal: 8,  nombre: "Borja Arroita",      posicion: "Centrocampista", partidos: 2, goles: 3 },
   { dorsal: 30, nombre: "Diego Sánchez",      posicion: "Centrocampista", partidos: 3, goles: 0 },
-  { dorsal: 45, nombre: "Mario Elvira",       posicion: "Centrocampista", partidos: 2, goles: 1 },
+  { dorsal: 45, nombre: "Mario Elvira",       posicion: "Centrocampista", partidos: 2, goles: 2 },
   { dorsal: 71, nombre: "Sandro Martin",      posicion: "Centrocampista", partidos: 4, goles: 1 },
   { dorsal: 80, nombre: "Sendoa Guerrero",    posicion: "Centrocampista", partidos: 4, goles: 1 },
   { dorsal: 17, nombre: "Jon Xabier Beltran", posicion: "Delantero",      partidos: 4, goles: 1 },
